@@ -1,0 +1,15 @@
+body {
+	font-family: Helvetica;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+button {
+	background-color: aqua;
+	padding: 8px;
+	margin: 4px;
+	border: 0;
+	border-radius: 8px;
+}
