@@ -1,9 +1,9 @@
 body {
 	font-family: Helvetica;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: column;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-direction: column;
 	background-color: #050505;
 	color: #fafafa;
 	min-height: 100vh;
@@ -12,17 +12,27 @@ body {
 	padding: 0;
 }
 
-label, button {
+label,
+button {
 	background-color: #122c41;
 	padding: 8px;
 	margin: 4px;
 	border: 0;
 	border-radius: 8px;
-	color: #fafafa
+	color: #fafafa;
+	font-size: 16px;
 }
 
 input[type="radio"]:hover + label {
 	background-color: #173853;
+}
+
+button:hover {
+	background-color: #173853;
+}
+
+.selected {
+	background-color: #2c77ba !important;
 }
 
 input[type="radio"]:checked + label {
@@ -35,4 +45,19 @@ input[type="radio"] {
 
 .red {
 	background-color: #b41f1f;
+}
+
+.red:hover {
+	background-color: #c42525;
+}
+
+@media screen and (min-width: 768px) {
+	.rewards {
+		position: fixed;
+		top: 50%;
+		left: 0;
+		background-color: #122c41;
+		padding: 32px;
+		font-size: 16px;
+	}
 }
