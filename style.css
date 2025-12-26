@@ -59,5 +59,6 @@ input[type="radio"] {
 		background-color: #122c41;
 		padding: 32px;
 		font-size: 16px;
+		max-width: 20vw;
 	}
 }
