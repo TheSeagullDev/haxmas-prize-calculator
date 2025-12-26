@@ -2,14 +2,37 @@ body {
 	font-family: Helvetica;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     flex-direction: column;
+	background-color: #050505;
+	color: #fafafa;
+	min-height: 100vh;
+	height: auto;
+	margin: 0;
+	padding: 0;
 }
 
-button {
-	background-color: aqua;
+label, button {
+	background-color: #122c41;
 	padding: 8px;
 	margin: 4px;
 	border: 0;
 	border-radius: 8px;
+	color: #fafafa
+}
+
+input[type="radio"]:hover + label {
+	background-color: #173853;
+}
+
+input[type="radio"]:checked + label {
+	background-color: #2c77ba;
+}
+
+input[type="radio"] {
+	display: none;
+}
+
+.red {
+	background-color: #b41f1f;
 }

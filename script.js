@@ -1,13 +1,20 @@
 const days = [];
 let snowflakeCount = 0;
 const prizes = [];
+const claimedDays = [];
 
-function Day(day, primaryPrize, snowflakes, snowflakeEquivalent, isOnlySnowflakes) {
-    this.day = day;
-    this.primaryPrize = primaryPrize;
-    this.snowflakes = snowflakes;
-    this.snowflakeEquivalent = snowflakeEquivalent;
-    this.isOnlySnowflakes = isOnlySnowflakes;
+function Day(
+	day,
+	primaryPrize,
+	snowflakes,
+	snowflakeEquivalent,
+	isOnlySnowflakes
+) {
+	this.day = day;
+	this.primaryPrize = primaryPrize;
+	this.snowflakes = snowflakes;
+	this.snowflakeEquivalent = snowflakeEquivalent;
+	this.isOnlySnowflakes = isOnlySnowflakes;
 }
 
 days.push(new Day(1, "$7.50 Domain Grant", 1, 2, false));
@@ -24,31 +31,76 @@ days.push(new Day(11, "$10 Domain Grant", 1, 3, false));
 days.push(new Day(12, "$10 Grant to go to the movies", 1, 3, false));
 
 const container = document.querySelector("#content");
+const snowflakeCounter = document.querySelector(".snowflakeCounter");
+const prizeList = document.querySelector(".prizesList");
 
 days.forEach((day) => {
-    const header = document.createElement("h2");
+	const dayDiv = document.createElement("div");
+	dayDiv.classList.add("day");
+	container.appendChild(dayDiv);
+	const header = document.createElement("h2");
 	header.textContent = `Day ${day.day}`;
-    container.appendChild(header);
-    if (day.isOnlySnowflakes) {
-        const header = document.createElement("h2");
-        header.textContent = `Day ${day.day}`;
-        const label = document.createElement("p");
-        label.textContent = `No choice for this day! You get ${day.snowflakes} snowflakes.`;
-        container.appendChild(label);
-    }
-    else {
-        const prize1 = document.createElement("input");
-        prize1.type = "radio";
-        prize1.name = day.day;
-        prize1.textContent =
+	dayDiv.appendChild(header);
+	if (day.isOnlySnowflakes) {
+		const header = document.createElement("h2");
+		header.textContent = `Day ${day.day}`;
+		const label = document.createElement("p");
+		label.textContent = `No choice for this day! You get ${day.snowflakes} snowflakes.`;
+		dayDiv.appendChild(label);
+	} else {
+		const prize1 = document.createElement("input");
+		prize1.addEventListener("change", () => {
+			if (!claimedDays.includes(day.day)) {
+				claimedDays.push(day.day);
+				prizes.push(day.primaryPrize);
+				snowflakeCount += day.snowflakes;
+			} else {
+				snowflakeCount -= day.snowflakeEquivalent;
+				prizes.push(day.primaryPrize);
+			}
+            updateRewards();
+		});
+		prize1.type = "radio";
+		prize1.name = day.day;
+		prize1.id = `prize1day${day.day}`;
+		const prize1Label = document.createElement("label");
+		prize1Label.htmlFor = `prize1day${day.day}`;
+		prize1Label.textContent =
 			day.snowflakes > 1
 				? `${day.primaryPrize} + ${day.snowflakes} snowflakes!`
 				: `${day.primaryPrize} + ${day.snowflakes} snowflake!`;
-        const prize2 = document.createElement("input");
-        prize2.type = "radio"
-        prize2.name = day.day;
-        prize2.textContent = `${day.snowflakes + day.snowflakeEquivalent} snowflakes!`;
-        container.appendChild(prize1);
-        container.appendChild(prize2);
-    }
-})
+		const prize2 = document.createElement("input");
+		prize2.addEventListener("change", () => {
+			if (!claimedDays.includes(day.day)) {
+				claimedDays.push(day.day);
+				snowflakeCount += day.snowflakes + day.snowflakeEquivalent;
+			} else {
+				prizeIndex = prizes.indexOf(day.primaryPrize);
+				prizes.splice(prizeIndex, 1);
+				snowflakeCount += day.snowflakeEquivalent;
+			}
+            updateRewards();
+		});
+		prize2.type = "radio";
+		prize2.name = day.day;
+		prize2.id = `prize2day${day.day}`;
+		const prize2Label = document.createElement("label");
+		prize2Label.htmlFor = `prize2day${day.day}`;
+		prize2Label.textContent = `${
+			day.snowflakes + day.snowflakeEquivalent
+		} snowflakes!`;
+		dayDiv.appendChild(prize1);
+		dayDiv.appendChild(prize1Label);
+		dayDiv.appendChild(prize2);
+		dayDiv.appendChild(prize2Label);
+	}
+	const cancel = document.createElement("button");
+	cancel.textContent = "X";
+	cancel.classList.add("red");
+	dayDiv.appendChild(cancel);
+});
+
+function updateRewards() {
+    snowflakeCounter.textContent = `Current snowflake count: ${snowflakeCount}`;
+    prizeList.textContent = `Prizes: ${prizes}`;
+}
