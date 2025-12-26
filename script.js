@@ -201,4 +201,22 @@ function updateRewards() {
 		e.textContent = prize;
 		prizeList.appendChild(e);
 	});
+	const otherPrizes = [];
+	if (claimedDays.length >= 3) {
+		otherPrizes.push("Exclusive Haxmas Sticker");
+	}
+	if (claimedDays.length >= 6) {
+		otherPrizes.push("Exclusive Haxmas Sticker Sheet");
+	}
+	if (claimedDays.length >= 9) {
+		otherPrizes.push("Hack Club Socks");
+	}
+	if (claimedDays.length == 12) {
+		otherPrizes.push("Orpheus Plushie!");
+	}
+	otherPrizes.forEach((prize) => {
+		const e = document.createElement("p");
+		e.textContent = prize;
+		prizeList.appendChild(e);
+	});
 }
