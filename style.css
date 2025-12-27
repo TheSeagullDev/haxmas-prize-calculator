@@ -51,14 +51,10 @@ input[type="radio"] {
 	background-color: #c42525;
 }
 
-@media screen and (min-width: 768px) {
-	.rewards {
-		position: fixed;
-		top: 50%;
-		left: 0;
-		background-color: #122c41;
-		padding: 32px;
-		font-size: 16px;
-		max-width: 20vw;
-	}
+.rewards {
+	margin-top: 16px;
+	bottom: 0;
+	background-color: #122c41;
+	padding: 16px 32px;
+	font-size: 16px;
 }
